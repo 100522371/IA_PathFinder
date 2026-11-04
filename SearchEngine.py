@@ -8,21 +8,25 @@ from Map import EPSILON
 NODES_EXPANDED = 0
 
 def h1(current_node, objective_node) -> np.float32:
+    global NODES_EXPANDED
 
     n_steps = (
         abs(float(current_node[0]) - float(objective_node[0]))
         + abs(float(current_node[1]) - float(objective_node[1]))
     )
 
+    NODES_EXPANDED += 1
     return np.float32(EPSILON * n_steps)
 
 
 def h2(current_node, objective_node) -> np.float32:
+    global NODES_EXPANDED
     distance = (
         (float(current_node[0]) - float(objective_node[0])) ** 2
         + (float(current_node[1]) - float(objective_node[1])) ** 2
     ) ** 0.5
 
+    NODES_EXPANDED += 1
     return np.float32(EPSILON * distance)
 
 def build_graph(detection_map: np.array, tolerance: np.float32) -> nx.DiGraph:
